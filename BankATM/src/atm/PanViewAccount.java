@@ -12,13 +12,7 @@ import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
 
-//*******************************************************************
-// # 03
-//*******************************************************************
-// Name : PanViewAccount
-// Type : Class
-// Description :  계좌조회 화면 패널을 구현한 Class 이다.
-//*******************************************************************
+
 public class PanViewAccount extends JPanel implements ActionListener
 {
     private JLabel Label_Account;
@@ -30,26 +24,14 @@ public class PanViewAccount extends JPanel implements ActionListener
 
     ATMMain MainFrame;
     
-    //*******************************************************************
-    // # 03-01
-    //*******************************************************************
-    // Name : PanViewAccount()
-    // Type : 생성자
-    // Description :  PanViewAccount Class의 생성자 구현
-    //*******************************************************************
+
     public PanViewAccount(ATMMain parent)
     {
         MainFrame = parent;
         InitGUI();
     }
     
-    //*******************************************************************
-    // # 03-02
-    //*******************************************************************
-    // Name : InitGUI
-    // Type : Method
-    // Description :  계좌조회 화면 패널의 GUI를 초기화 하는 메소드 구현
-    //*******************************************************************
+
     private void InitGUI()
     {
         setLayout(null);
@@ -81,14 +63,7 @@ public class PanViewAccount extends JPanel implements ActionListener
         add(Btn_Close);
     }
 
-    //*******************************************************************
-    // # 03-02-01
-    //*******************************************************************
-    // Name : actionPerformed
-    // Type : Listner
-    // Description :  취소 버튼의 동작을 구현
-    //                취소 동작 후 메인 화면으로 변경되도록 구현
-    //*******************************************************************
+
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == Btn_Close)
@@ -98,13 +73,7 @@ public class PanViewAccount extends JPanel implements ActionListener
         }
     } 
     
-    //*******************************************************************
-    // # 03-03
-    //*******************************************************************
-    // Name : GetBalance()
-    // Type : Method
-    // Description :  ATMMain의 Send 기능을 호출하여 서버에 계좌조회 요청 메시지를 전달 하는 기능.
-    //*******************************************************************
+
     public void GetBalance()
     {
         MainFrame.send(new CommandDTO(RequestType.VIEW), new CompletionHandler<Integer, ByteBuffer>() {

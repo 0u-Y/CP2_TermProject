@@ -19,13 +19,7 @@ import java.nio.channels.CompletionHandler;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-//*******************************************************************
-// # 01
-//*******************************************************************
-// Name : ATMMain
-// Type : Class
-// Description :  ATM기기의 GUI 프레임이며, 서버와의 소켓통신을 담당한다
-//*******************************************************************
+
 public class ATMMain
         extends JFrame
         implements ActionListener, BankServiceHandler {
@@ -53,13 +47,7 @@ public class ATMMain
     private AsynchronousSocketChannel channel;
 
 
-    //*******************************************************************
-    // # 01-01
-    //*******************************************************************
-    // Name : ATMMain()
-    // Type : 생성자
-    // Description :  ATMMain Class의 생성자로서, 소켓통신을 시작하고 GUI를 초기화한다
-    //*******************************************************************
+
     public ATMMain()
     {
         startClient();
@@ -67,14 +55,7 @@ public class ATMMain
         setVisible(true);
     }
 
-    //*******************************************************************
-    // # 01-02 (GUI)
-    //*******************************************************************
-    // Name : InitGui
-    // Type : Method
-    // Description :  ATMMain Class의 GUI 컴포넌트를 할당하고 초기화한다.
-    //                ATMMain Frame은 각 화면에 해당하는 패널들을 가지고있다.
-    //*******************************************************************
+
     private void InitGui()
     {
         setLayout(null);
@@ -163,14 +144,7 @@ public class ATMMain
     }
 
 
-    //*******************************************************************
-    // # 01-02-01
-    //*******************************************************************
-    // Name : actionPerformed
-    // Type : Listener
-    // Description :  ATMMain Frame의 버튼 컴포넌트들의 동작을 구현한 부분
-    //                아래 코드에서는 각 기능별 화면으로 전환하는 코드가 작성되어있다.
-    //*******************************************************************
+
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == Btn_ViewAccount)
@@ -205,13 +179,8 @@ public class ATMMain
             dispose();
         }
     }
-    //*******************************************************************
-    // # 01-02-02
-    //*******************************************************************
-    // Name : disply() , SetFrameUI()
-    // Type : Method
-    // Description :  각 화면별 패널의 Visible 여부를 바꾸어주어 화면 전환의 효과를 준다.
-    //*******************************************************************
+
+
     public void display(String viewName) {
         if (userId == null)
         {
@@ -283,13 +252,7 @@ public class ATMMain
 
 
 
-    //*******************************************************************
-    // # 01-03-01
-    //*******************************************************************
-    // Name : startClient()
-    // Type : Method
-    // Description :  ATMMain Class 가 가지고있는 소켓을 서버소켓에 접속시킨다
-    //*******************************************************************
+
     private void startClient() {
         try {
             channelGroup = AsynchronousChannelGroup.withFixedThreadPool(Runtime.getRuntime().availableProcessors(), Executors.defaultThreadFactory());
@@ -311,13 +274,7 @@ public class ATMMain
 
 
 
-    //*******************************************************************
-    // # 01-03-02
-    //*******************************************************************
-    // Name : stopClient(), disconnectServer()
-    // Type : Method
-    // Description :  ATMMain Class 가 가지고있는 소켓의 연결을 해제한다.
-    //*******************************************************************
+
     private void stopClient() {
         try {
             if (channelGroup != null && !channelGroup.isShutdown()) {
@@ -334,15 +291,7 @@ public class ATMMain
         stopClient();
     }
 
-    //*******************************************************************
-    // # 01-03-03
-    //*******************************************************************
-    // Name : send()
-    // Type : Method
-    // Description :  CommandDTO를 매개변수로 하여 서버에 요청 메시지를 전달하는 메소드
-    //                CommandDTO Class 에는 ATM 서비스 요청에 필요한 데이터들이 정의 되어 있다.
-    //                ATMMain Class는 BankServiceHandler 인터페이스를 상속하였다.
-    //*******************************************************************
+
     @Override
     public void send(CommandDTO commandDTO, CompletionHandler<Integer, ByteBuffer> handlers) {
         commandDTO.setId(userId);

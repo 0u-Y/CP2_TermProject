@@ -22,14 +22,7 @@ import java.util.concurrent.Executors;
 
 
 
-//*******************************************************************
-// # 51
-//*******************************************************************
-// Name : ServerMain
-// Type : Class
-// Description :  BankServer의 GUI 프레임이며, ATM과의 소켓통신을 담당한다.
-//                계좌 정보들을 보유하고 있으며, 관련 기능들을 가지고 있다.
-//*******************************************************************
+
 
 class ServerMain
         extends JFrame
@@ -48,14 +41,7 @@ class ServerMain
     private List<Client> clientList = new Vector<>();
 
 
-    //*******************************************************************
-    // # 51-01
-    //*******************************************************************
-    // Name : ServerMain()
-    // Type : 생성자
-    // Description :  ServerMain Class의 생성자로서 계좌 정보를 Load 하고, GUI를 초기화 한다.
-    //                계좌 정보는 ./Account.txt에 저장하며 Server 실행시 Load, 종료시 Save 동작을 한다
-    //*******************************************************************
+
     public ServerMain()
     {
 
@@ -74,13 +60,7 @@ class ServerMain
 
     }
 
-    //*******************************************************************
-    // # 51-01-01
-    //*******************************************************************
-    // Name : GetDefaultCustomers()
-    // Type : Method
-    // Description :  Server 시작 시 저장된 계좌 정보가 없으면 Default 계좌를 생성하는 기능
-    //*******************************************************************
+
     private static List<CustomerVO> GetDefaultCustomers() {
         List<CustomerVO> customerList = new Vector<>();
         customerList.add(new CustomerVO("202300001","광수","202300001", new AccountVO("광수", "202300001", AccountType.CHECKING, 100_000_000, Date.valueOf(LocalDate.now()))));
@@ -91,13 +71,7 @@ class ServerMain
     }
 
 
-    //*******************************************************************
-    // # 51-01-02
-    //*******************************************************************
-    // Name : SaveCustomerFile()
-    // Type : Method
-    // Description :  현재까지의 계좌 정보를 txt 파일로 저장하는 기능
-    //*******************************************************************
+
     public void SaveCustomerFile(List<CustomerVO> customers, String filePath)
     {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath)))
@@ -110,13 +84,7 @@ class ServerMain
     }
 
 
-    //*******************************************************************
-    // # 51-01-02
-    //*******************************************************************
-    // Name : SaveCustomerFile()
-    // Type : Method
-    // Description :  txt 파일로 저장된 계좌 정보를 Load 하는 기능
-    //*******************************************************************
+
     public List<CustomerVO> ReadCustomerFile(String filePath)
     {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./Account.txt")))
@@ -135,14 +103,7 @@ class ServerMain
         }
     }
 
-    //*******************************************************************
-    // # 51-02 (GUI)
-    //*******************************************************************
-    // Name : InitGui
-    // Type : Method
-    // Description :  ServerMain Class의 GUI 컴포넌트를 할당하고 초기화 한다.
-    //                ServerMain Frame은 서버 시작 버튼 및 텍스트 창 초기화 버튼을 가지고 있다
-    //*******************************************************************
+
     private void InitGui()
     {
         setTitle("서버 GUI");
@@ -189,14 +150,7 @@ class ServerMain
 
     }
 
-    //*******************************************************************
-    // # 51-02-01
-    //*******************************************************************
-    // Name : actionPerformed
-    // Type : Listener
-    // Description :  ServerMain Frame의 버튼 컴포넌트들의 동작을 구현한 부분
-    //                아래 코드에서는 서버 Start/Stop 토글 버튼 기능 및 텍스트창 초기화 버튼기능이 구현 되어 있다.
-    //*******************************************************************
+
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == Btn_StartStop)
@@ -220,14 +174,7 @@ class ServerMain
 
 
 
-    //*******************************************************************
-    // # 51-03-01
-    //*******************************************************************
-    // Name : startServer
-    // Type : Method
-    // Description :  서버 소켓을 port 5001 로 bind 하여 open 하는 기능 및
-    //                클라이언트 소켓의 접속 시도시 accept 하여 연결 시키는 기능이 구현 되어 있다.
-    //*******************************************************************
+
     public void startServer()
     {
         try
@@ -280,13 +227,7 @@ class ServerMain
         }
     }
 
-    //*******************************************************************
-    // # 51-03-02
-    //*******************************************************************
-    // Name : stopServer
-    // Type : Method
-    // Description :  서버 소켓을 연결 해제 하는 기능
-    //*******************************************************************
+
     public void stopServer()
     {
         clientList.clear();
@@ -312,14 +253,7 @@ class ServerMain
     }
 
 
-    //*******************************************************************
-    // # 51-03-03
-    //*******************************************************************
-    // Name : removeClient()
-    // Type : Method
-    // Description :  클라이언트 소켓이 해제 되었을 때
-    //                ServerMain 의 clientList 리스트 에서 해당 인덱스을 제거하는 기능
-    //*******************************************************************
+
     @Override
     public void removeClient(Client client)
     {

@@ -3,14 +3,7 @@ package common;
 import java.io.Serializable;
 
 
-//*******************************************************************
-// # 91
-//*******************************************************************
-// Name : CommandDTO
-// Type : Class
-// Description :  ATM과 Sever 사이의 통신 프로토콜을 정의 하기 위해 필요한 DTO(DataTransferObject)이다.
-//                생성자와, 오브젝트 내부 데이터 get, set 동작이 구현되어 있다.
-//*******************************************************************
+
 
 @SuppressWarnings("serial")
 public class CommandDTO implements Serializable {

@@ -12,14 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 
-//*******************************************************************
-// # 52
-//*******************************************************************
-// Name : Client
-// Type : Class
-// Description :  BankServer에 접속 요청한 ATM 소켓과의 통신을 담당하는 소켓 Class 구현.
-//                메시지 Receive, Send 및 예금, 출금, 계좌 이체 등의 기능이 구현 되어 있다.
-//*******************************************************************
+
 public class Client {
     private AsynchronousSocketChannel clientChannel;
     private ClientHandler handler;
@@ -33,14 +26,7 @@ public class Client {
         receive();
     }
 
-    //*******************************************************************
-    // # 52-01
-    //*******************************************************************
-    // Name : receive()
-    // Type : method
-    // Description :  수신한 메시지의 버퍼를 CommandDTO Class 형태로 형변환 후
-    //                요청 정보를 파싱하여 각 요청에 대한 기능을 구현
-    //*******************************************************************
+
     private void receive() {
         ByteBuffer byteBuffer = ByteBuffer.allocate(512);
         clientChannel.read(byteBuffer, byteBuffer, new CompletionHandler<Integer, ByteBuffer>() {
@@ -89,14 +75,7 @@ public class Client {
         });
     }
 
-    //*******************************************************************
-    // # 52-02
-    //*******************************************************************
-    // Name : send()
-    // Type : method
-    // Description :  연결된 ATM 소켓에 CommandDTO 형태로 메시지를 전달
-    //                CommandDTO 내부에 요청에대한 결과 정보가 존재 해야 한다
-    //*******************************************************************
+
     private void send(CommandDTO commandDTO) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -110,13 +89,7 @@ public class Client {
     }
 
 
-    //*******************************************************************
-    // # 52-03
-    //*******************************************************************
-    // Name : disconnectClient()
-    // Type : method
-    // Description :  해당 소켓의 예외발생 혹은 통신 실패시 소켓 해제 기능 구현
-    //*******************************************************************
+
     private void disconnectClient() {
         try {
             clientChannel.close();
@@ -127,14 +100,7 @@ public class Client {
     }
 
 
-    //*******************************************************************
-    // # 52-01-01
-    //*******************************************************************
-    // Name : login()
-    // Type : method
-    // Description : ATM의 Loging 요청 기능 구현
-    //               성공, 실패 여부를 응답메시지에 전달
-    //*******************************************************************
+
     private synchronized void login(CommandDTO commandDTO) {
         Optional<CustomerVO> customer = this.customerList.stream().filter(customerVO -> Objects.equals(customerVO.getId(), commandDTO.getId()) && Objects.equals(customerVO.getPassword(), commandDTO.getPassword())).findFirst();
 
@@ -150,14 +116,7 @@ public class Client {
         send(commandDTO);
     }
 
-    //*******************************************************************
-    // # 52-01-02
-    //*******************************************************************
-    // Name : view()
-    // Type : method
-    // Description : ATM의 계좌 조회 요청 기능 구현
-    //               계좌 잔액을 응답메시지에 전달
-    //*******************************************************************
+
     private synchronized void view(CommandDTO commandDTO) {
         CustomerVO customer = this.customerList.stream().filter(customerVO -> Objects.equals(customerVO.getId(), commandDTO.getId())).findFirst().get();
         // 데이터 전송
@@ -167,14 +126,7 @@ public class Client {
         send(commandDTO);
     }
 
-    //*******************************************************************
-    // # 52-01-03
-    //*******************************************************************
-    // Name : transfer()
-    // Type : method
-    // Description : ATM의 계좌 이체기능 구현
-    //               성공, 실패 여부를 응답메시지에 전달
-    //*******************************************************************
+
     private synchronized void transfer(CommandDTO commandDTO) {
         CustomerVO user = this.customerList.stream().filter(customerVO -> Objects.equals(customerVO.getAccount().getAccountNo(), commandDTO.getUserAccountNo())).findFirst().get();
         Optional<CustomerVO> receiverOptional = this.customerList.stream().filter(customerVO -> Objects.equals(customerVO.getAccount().getAccountNo(), commandDTO.getReceivedAccountNo())).findFirst();
@@ -196,14 +148,7 @@ public class Client {
         send(commandDTO);
     }
 
-    //*******************************************************************
-    // # 52-01-04
-    //*******************************************************************
-    // Name : deposit()
-    // Type : method
-    // Description : ATM의 계좌 입금 기능 구현
-    //               성공, 실패 여부를 응답메시지에 전달
-    //*******************************************************************
+
     private synchronized void deposit(CommandDTO commandDTO) {
         CustomerVO user = this.customerList.stream().filter(customerVO -> Objects.equals(customerVO.getAccount().getAccountNo(), commandDTO.getUserAccountNo())).findFirst().get();
         user.getAccount().setBalance(user.getAccount().getBalance() + commandDTO.getAmount());
@@ -212,14 +157,7 @@ public class Client {
         send(commandDTO);
     }
 
-    //*******************************************************************
-    // # 52-01-05
-    //*******************************************************************
-    // Name : deposit()
-    // Type : method
-    // Description : ATM의 계좌 출금 기능 구현
-    //               성공, 실패 여부를 응답메시지에 전달
-    //*******************************************************************
+
     private synchronized void withdraw(CommandDTO commandDTO) {
         CustomerVO user = this.customerList.stream().filter(customerVO -> Objects.equals(customerVO.getAccount().getAccountNo(), commandDTO.getUserAccountNo())).findFirst().get();
         if (user.getAccount().getBalance() < commandDTO.getAmount()) {
