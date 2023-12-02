@@ -25,6 +25,7 @@ public class PanLogin extends JPanel implements ActionListener
     private JTextField Text_Password;
 
 
+    private JButton Btn_Join;
     private JButton Btn_Transfer;
     private JButton Btn_Close;
 
@@ -71,13 +72,18 @@ public class PanLogin extends JPanel implements ActionListener
         add(Text_Password);
 
 
+        Btn_Join = new JButton("회원가입");
+        Btn_Join.setBounds(70,250,70,20);
+        Btn_Join.addActionListener(this);
+        add(Btn_Join);
+
         Btn_Transfer = new JButton("로그인");
-        Btn_Transfer.setBounds(100,250,70,20);
+        Btn_Transfer.setBounds(205,250,70,20);
         Btn_Transfer.addActionListener(this);
         add(Btn_Transfer);
 
         Btn_Close = new JButton("취소");
-        Btn_Close.setBounds(250,250,70,20);
+        Btn_Close.setBounds(340,250,70,20);
         Btn_Close.addActionListener(this);
         add(Btn_Close);
     }
